@@ -82,12 +82,12 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=app.config['E_TOKEN_EXPIRES']):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
-            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            app.config['SECRET_KEY'], algorithm='HS256')
 
     def get_confirm_email_token(self, expires_in=app.config['E_TOKEN_EXPIRES']):
         return jwt.encode(
             {'confirm_email': self.id, 'exp': time() + expires_in},
-            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            app.config['SECRET_KEY'], algorithm='HS256')
 
     def add_for_lunch(self, ttl=timedelta(days=app.config['LUNCH_EXPIRE_DAYS'])):
         app.redis.set(int(self.id), "", ex=ttl) # value is empty to reduce space
